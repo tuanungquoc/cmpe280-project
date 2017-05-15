@@ -1,0 +1,38 @@
+﻿<header>
+    <div class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <span class="glyphicon glyphicon-film"></span>
+                Show<strong>Trackr</strong></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/movie']">Movie</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/add']">Add</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" >
+            <li class="navbar-text"></li>
+            <li><a [routerLink]="['/login']">Logout</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li class="navbar-text"></li>
+            <li><a>{{currentUser.firstName}}</a></li>
+        </ul>
+    </div>
+</header>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Add TV Show</div>
+        <div class="panel-body">
+            <form name="addForm" #myForm="ngForm" (ngSubmit)="myForm.form.valid && onSubmit()">
+                <div>
+                    <input type="text" class="form-control" name="showname" [(ngModel)]="show.showName" #showname="ngModel" required />
+                    <br>
+                    <button class="btn btn-primary" type="submit" [disabled]="!myForm.form.valid">Add</button>
+                    <div>{{test}}</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿<header>
+    <div class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <span class="glyphicon glyphicon-film"></span>
+                Show<strong>Trackr</strong></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/movie']">Movie</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/add']">Add</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" >
+            <li class="navbar-text"></li>
+            <li><a [routerLink]="['/login']">Logout</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li class="navbar-text"></li>
+            <li><a>{{currentUser.firstName}}</a></li>
+        </ul>
+    </div>
+</header>
+<div class="jumbotron">
+    <div class="container">
+        <ul class="alphabet">
+            <li *ngFor="let char of alphabet">
+                <span (click)="onFilterByAlphabet(char)">{{char}}</span>
+            </li>
+        </ul>
+        <ul class="genres">
+            <li *ngFor="let genre of genres">
+                <span (click)="onFilterByGenre(genre)">{{genre}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {{headingTitle}}
+            <div class="pull-right">
+                <input class="search" type="text" [(ngModel)]="query.name" placeholder="Search...">
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row show-list">
+                <div class="col-xs-4 col-md-3" *ngFor="let show of shows ">
+                    <a [routerLink]="['/detail',show._id]">
+                        <img class="img-rounded" [src]="show.poster" width="100%"/>
+                    </a>
+                    <div class="text-center">
+                        <a [routerLink]="['/detail',show._id]">{{show.name}}</a>
+                        <p class="text-muted">Episodes: {{show.episodes.length}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

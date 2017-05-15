@@ -1,0 +1,83 @@
+﻿<header>
+    <div class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <span class="glyphicon glyphicon-film"></span>
+                Show<strong>Trackr</strong></a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/movie']">Movie</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['/add']">Add</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" >
+            <li class="navbar-text"></li>
+            <li><a [routerLink]="['/login']">Logout</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li class="navbar-text"></li>
+            <li><a>{{currentUser.firstName}}</a></li>
+        </ul>
+    </div>
+</header>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="media">
+                <div class="pull-left">
+                    <img class="media-object img-rounded" [src]="show.poster">
+                    <div class="text-center" ng-if="currentUser">
+                        <div *ngIf="!isSubscribe">
+                            <button (click)="subscribe()" class="btn btn-block btn-success">
+                                <span class="glyphicon glyphicon-plus"></span> Subscribe
+                            </button>
+                        </div>
+                        <div *ngIf="isSubscribe">
+                        <button (click)="unsubscribe()" class="btn btn-block btn-danger">
+                        <span class="glyphicon glyphicon-minus"></span> Unsubscribe
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="media-body">
+                    <h2 class="media-heading">
+                        {{show.name}}
+                        <span class="pull-right text-danger">{{show.rating}}</span>
+                    </h2>
+                    <h4 ng-show="show.status === 'Continuing'">
+                        <span class="glyphicon glyphicon-calendar text-danger"></span>
+                        {{show.airsDayOfWeek}} <em>{{show.airsTime}}</em> on
+                        {{show.network}}
+                    </h4>
+                    <h4 ng-show="show.status === 'Ended'">
+                        Status: <span class="text-danger">Ended</span>
+                    </h4>
+                    <p>{{show.overview}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info" *ngIf="firstAired!=null">
+        The next episode starts {{firstAired}}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-play"></span> Episodes
+        </div>
+        <div class="panel-body">
+            <div class="episode" *ngFor="let episode of show.episodes">
+                <h4>{{episode.episodeName}}
+                    <small>Season {{episode.season}}, Episode {{episode.episodeNumber}}</small>
+                </h4>
+                <p>
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    {{episode.firstAired | dateFormat }}
+                </p>
+                <p>{{episode.overview}}</p>
+            </div>
+        </div>
+    </div>
+</div>
