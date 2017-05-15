@@ -46,7 +46,7 @@
         </div>
         <div class="panel-body">
             <div class="row show-list">
-                <div class="col-xs-4 col-md-3" *ngFor="let show of shows ">
+                <div class="col-xs-4 col-md-3" *ngFor="let show of shows">
                     <a [routerLink]="['/detail',show._id]">
                         <img class="img-rounded" [src]="show.poster" width="100%"/>
                     </a>

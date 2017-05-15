@@ -19,7 +19,7 @@ export class DetailComponent implements OnInit {
     private id = '';
     public nextEspisode = {firstAired:''};
     public firstAired: Date = null;
-    public show = {episodes:[{firstAired:''}] };
+    public show = {episodes:[{firstAired:''}],subscribers:[{email:''}] };
 
     public isSubscribe = false;
     constructor(private _alertService:AlertService, private userService: UserService, private _subsciptionService:SubscriptionService, private _showService:ShowsService, private _router:Router, private _routeParams:ActivatedRoute) {
