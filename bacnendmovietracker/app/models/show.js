@@ -23,9 +23,7 @@ var showSchema = new mongoose.Schema({
     status: String,
     poster: String,
     subscribers: [{
-        email:String
-    },{
-        _id: false
+        email: String
     }],
     episodes: [{
         season: Number,
@@ -34,7 +32,6 @@ var showSchema = new mongoose.Schema({
         firstAired: Date,
         overview: String
     }]
-
 });
 
 // create the model for show and expose it to our app
