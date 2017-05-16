@@ -22,6 +22,7 @@ import {AddComponent} from "./add/add.component";
 import {DatePipe} from "./_services/date.pipe";
 import {ShowNameFilter} from "./_services/show.pipe";
 import {SubscriptionService} from "./_services/subscription.service";
+import {OrderBy} from "./_services/orderby.pipe";
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import {SubscriptionService} from "./_services/subscription.service";
         DetailComponent,
         AddComponent,
         DatePipe,
-        ShowNameFilter
+        ShowNameFilter,
+        OrderBy
     ],
     providers: [
         AuthGuard,

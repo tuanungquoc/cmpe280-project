@@ -3,6 +3,7 @@ import { User } from '../_models/index';
 import { UserService } from '../_services/index';
 import {ShowsService} from "../_services/show.service";
 import {Router} from "@angular/router";
+import {Show} from '../_services/show.schema';
 
 @Component({
     moduleId: module.id,
@@ -14,7 +15,7 @@ export class MovieComponent implements OnInit {
     currentUser: User;
 
     public headingTitle = 'Top 12 Shows';
-    public shows: Object[] = [];
+    public shows: Show[] = [];
     public query = { name : ''};
 
     public alphabet: string[] = ['0-9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -49,10 +50,19 @@ export class MovieComponent implements OnInit {
 
     constructor(private userService: UserService, private _showService:ShowsService, private _router:Router) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
     }
 
-    ngOnInit() {
-
+    ngOnInit():any {
+        //get top 12 shows
+        this._showService.getTopShows().subscribe(
+            data => {
+                this.shows = data;
+                this.headingTitle = 'Top ' + this.shows.length + " shows";
+            },
+            error => alert(error),
+            () => console.log('Finished')
+        );
     }
 
 }

@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
                 <span class="glyphicon glyphicon-film"></span>
-                Show<strong>Trackr</strong></a>
+                Movie<strong>Tracker</strong></a>
         </div>
         <ul class="nav navbar-nav">
             <li><a [routerLink]="['/movie']">Movie</a></li>
@@ -41,12 +41,13 @@
         <div class="panel-heading">
             {{headingTitle}}
             <div class="pull-right">
-                <input class="search" type="text" [(ngModel)]="query.name" placeholder="Search...">
+                <input class="search" type="text" [(ngModel)]="query.name" #listFilter placeholder="Search...">
             </div>
         </div>
+        <div>{{query.name}}</div>
         <div class="panel-body">
             <div class="row show-list">
-                <div class="col-xs-4 col-md-3" *ngFor="let show of shows">
+                <div class="col-xs-4 col-md-3" *ngFor="let show of shows | showNameFilter:query.name | orderByRating:'rating'">
                     <a [routerLink]="['/detail',show._id]">
                         <img class="img-rounded" [src]="show.poster" width="100%"/>
                     </a>

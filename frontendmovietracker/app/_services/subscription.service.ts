@@ -12,19 +12,19 @@ import "rxjs/add/operator/map";
 
 export class SubscriptionService{
     constructor(private _http:Http){}
-
+    private hostname:string ='http://localhost:8080'
     subscribe(show:any,email:string){
         var param = 'showId='+show._id+"&email="+email;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.post("http://localhost:8080/api/subscribe",param,{headers:headers}).map(res =>res);
+        return this._http.post(this.hostname+"/api/subscribe",param,{headers:headers}).map(res =>res);
     }
 
     ubsubscribe(show:any,email:string){
         var param = 'showId='+show._id+"&email="+email;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.post("http://localhost:8080/api/unsubscribe",param,{headers:headers}).map(res =>res);
+        return this._http.post(this.hostname+"/api/unsubscribe",param,{headers:headers}).map(res =>res);
     }
 
 }

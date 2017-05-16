@@ -9,22 +9,28 @@ import "rxjs/add/operator/map";
 
 export class ShowsService{
     constructor(private _http:Http){}
+    private hostname:string ='http://localhost:8080';
 
     getShowsByGenre(genre:string) {
-        return this._http.get("http://localhost:8080/api/shows?genre="+genre).map(res => res.json());
+        return this._http.get(this.hostname+"/api/shows?genre="+genre).map(res => res.json());
     }
+
     getShowsByAlphabet(char:string){
-        return this._http.get("http://localhost:8080/api/shows?alphabet="+char).map(res => res.json());
+        return this._http.get(this.hostname+"/api/shows?alphabet="+char).map(res => res.json());
     }
 
     addShow(showName:string){
         var param = 'showName='+showName;
         var headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        return this._http.post("http://localhost:8080/api/shows",param,{headers:headers}).map(res =>res);
+        return this._http.post(this.hostname+"/api/shows",param,{headers:headers}).map(res =>res);
     }
 
     getShowById(id:string){
-        return this._http.get("http://localhost:8080/api/shows/"+id).map(res => res.json());
+        return this._http.get(this.hostname+"/api/shows/"+id).map(res => res.json());
+    }
+
+    getTopShows(){
+        return this._http.get(this.hostname+"/api/shows").map(res => res.json());
     }
 }

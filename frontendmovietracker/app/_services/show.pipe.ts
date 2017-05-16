@@ -9,7 +9,7 @@ import {Show} from "./show.schema";
 })
 @Injectable()
 export class ShowNameFilter implements PipeTransform {
-    transform(shows: Show[], args: any[]): any {
-        return shows.filter(show => show.name.toLowerCase().indexOf(args[0].toLowerCase()) !== -1);
+    transform(shows:Show[], args:String) {
+        return shows.filter(show => show.name.toLowerCase().indexOf(args.toLowerCase()) !== -1);
     }
 }
