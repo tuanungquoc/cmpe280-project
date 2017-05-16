@@ -140,7 +140,8 @@ module.exports = function(app, fs) {
                     return next(err);
                 }
                 // console.log("Show before calling agenda:" + show);
-                var alertDate = Sugar.Date.create('Next ' + show.airsDayOfWeek + ' at ' + show.airsTime);
+                var alertDate = Sugar.Date.create('Next ' + show.airsDayOfWeek + ' at ' + show.airsTime).rewind({hour:2});
+                console.log("Aler Date: + alertDate");
                 // console.log("show name : " + show.name);
                 agenda.schedule(alertDate, 'send email alert', show.name).repeatEvery('1 week');
                 res.header('Access-Control-Allow-Origin', "*");
@@ -168,31 +169,34 @@ agenda.define('send email alert', function(job, done) {
        return new Date(episode.firstAired) > new Date();
       })[0];
 
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'cmpe280.group7@gmail.com',
-          pass:  'group7project'
-      }});
+      if (upcomingEpisode)
+      {
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'cmpe280.group7@gmail.com',
+            pass:  'group7project'
+        }});
 
-      var mailOptions = {
-        from: 'Movie Tracker ✔ <Admin@movietracker.com>',
-        to: emails.join(','),
-        subject: show.name + ' is starting soon!',
-        text: show.name + ' starts in less than 2 hours on ' + show.network + '.\n\n'  +
-        'Episode ' + upcomingEpisode.episodeNumber + ' Overview\n\n' + upcomingEpisode.overview
-      };
+        var mailOptions = {
+          from: 'Movie Tracker ✔ <Admin@movietracker.com>',
+          to: emails.join(','),
+          subject: show.name + ' is starting soon!',
+          text: show.name + ' starts in less than 2 hours on ' + show.network + '.\n\n'  +
+          'Episode ' + upcomingEpisode.episodeNumber + ' Overview\n\n' + upcomingEpisode.overview
+        };
 
-      transporter.sendMail(mailOptions, function(error, response) {
-        if (error) {
-          console.log('Error occurred');
-          console.log(error.message);
-          return;
-        }
-        console.log('Message sent successfully!');
-        transporter.close();
-        done();
-      });
+        transporter.sendMail(mailOptions, function(error, response) {
+          if (error) {
+            console.log('Error occurred');
+            console.log(error.message);
+            return;
+          }
+          console.log('Message sent successfully!');
+          transporter.close();
+          done();
+        });
+      }
     }
   });
 });
