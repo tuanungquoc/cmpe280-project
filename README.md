@@ -33,3 +33,6 @@ npm install
 ```bash
 npm start
 ```
+
+Open up a browser and enter the following address:  
+http://localhost:3000/
