@@ -23,7 +23,7 @@ In the mongo shell, use the database movie tracker
 use movietracker
 ```
 
-Servers:
+Servers:  
 cd into /backendmovietracker and /frontendmovietracker and enter the following commands
 
 ```bash
