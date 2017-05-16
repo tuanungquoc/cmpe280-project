@@ -2,8 +2,11 @@
 
 How to run locally:
 
-Mongdodb:
-In /backendmovietracker/app/routes.js line 7, change port 43151 to 27017
+Mongdodb:  
+In /backendmovietracker/app/routes.js line 7, change  
+"mongodb://cmpe280-project:group7project@ds143151.mlab.com:43151/movietracker"  
+to  
+"localhost:27017/movietracker"  
 
 Start Mongodb
 ```bash
