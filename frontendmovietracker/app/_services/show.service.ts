@@ -9,7 +9,7 @@ import "rxjs/add/operator/map";
 
 export class ShowsService{
     constructor(private _http:Http){}
-    private hostname:string ='http://localhost:8080';
+    private hostname:string ='https://cmpe280-group7-backend.herokuapp.com';
 
     getShowsByGenre(genre:string) {
         return this._http.get(this.hostname+"/api/shows?genre="+genre).map(res => res.json());

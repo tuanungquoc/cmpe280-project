@@ -12,7 +12,7 @@ import "rxjs/add/operator/map";
 
 export class SubscriptionService{
     constructor(private _http:Http){}
-    private hostname:string ='http://localhost:8080'
+    private hostname:string ='https://cmpe280-group7-backend.herokuapp.com'
     subscribe(show:any,email:string){
         var param = 'showId='+show._id+"&email="+email;
         var headers = new Headers();
