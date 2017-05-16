@@ -1,7 +1,7 @@
 // app/routes.js
 // TENANT_ID: tenant.TENANT_ID
 var xml2js = require('xml2js');
-var Show  = require('../app/models/show');
+var Show  = require('./models/show');
 var async = require('async');
 var request = require('request');
 var agenda = require('agenda')({ db: { address: 'mongodb://cmpe280-project:group7project@ds143151.mlab.com:43151/movietracker' } });
@@ -139,7 +139,9 @@ module.exports = function(app, fs) {
                     }
                     return next(err);
                 }
+                // console.log("Show before calling agenda:" + show);
                 var alertDate = Sugar.Date.create('Next ' + show.airsDayOfWeek + ' at ' + show.airsTime);
+                // console.log("show name : " + show.name);
                 agenda.schedule(alertDate, 'send email alert', show.name).repeatEvery('1 week');
                 res.header('Access-Control-Allow-Origin', "*");
                 res.send(200);
@@ -155,42 +157,43 @@ agenda.define('send email alert', function(job, done) {
       console.log(err);
     }
     console.log("Show:" + show.subscribers);
-    var emails = [];
-    for (subscriber of show.subscribers) {
-      emails.push(subscriber.email);
-    }
+    if (show.subscribers)
+    {
+      var emails = [];
+      for (subscriber of show.subscribers) {
+         emails.push(subscriber.email);
+      }
+      console.log("Emails:" + emails);
+      var upcomingEpisode = show.episodes.filter(function(episode) {
+       return new Date(episode.firstAired) > new Date();
+      })[0];
 
-   console.log("Emails:" + emails);
-    var upcomingEpisode = show.episodes.filter(function(episode) {
-      return new Date(episode.firstAired) > new Date();
-    })[0];
-
-    var transporter = nodemailer.createTransport({
+      var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
           user: 'cmpe280.group7@gmail.com',
           pass:  'group7project'
-        }});
+      }});
 
-    var mailOptions = {
+      var mailOptions = {
+        from: 'Movie Tracker ✔ <Admin@movietracker.com>',
+        to: emails.join(','),
+        subject: show.name + ' is starting soon!',
+        text: show.name + ' starts in less than 2 hours on ' + show.network + '.\n\n'  +
+        'Episode ' + upcomingEpisode.episodeNumber + ' Overview\n\n' + upcomingEpisode.overview
+      };
 
-      from: 'Movie Tracker ✔ <Admin@movietracker.com>',
-      to: emails.join(','),
-      subject: show.name + ' is starting soon!',
-      text: show.name + ' starts in less than 2 hours on ' + show.network + '.\n\n'  +
-      'Episode ' + upcomingEpisode.episodeNumber + ' Overview\n\n' + upcomingEpisode.overview
-    };
-
-    transporter.sendMail(mailOptions, function(error, response) {
-      if (error) {
-        console.log('Error occurred');
-        console.log(error.message);
-        return;
-      }
-      console.log('Message sent successfully!');
-      transporter.close();
-      done();
-    });
+      transporter.sendMail(mailOptions, function(error, response) {
+        if (error) {
+          console.log('Error occurred');
+          console.log(error.message);
+          return;
+        }
+        console.log('Message sent successfully!');
+        transporter.close();
+        done();
+      });
+    }
   });
 });
 
