@@ -140,7 +140,7 @@ module.exports = function(app, fs) {
                     return next(err);
                 }
                 // console.log("Show before calling agenda:" + show);
-                var alertDate = Sugar.Date.create('Next ' + show.airsDayOfWeek + ' at ' + show.airsTime).rewind({hour:2});
+                var alertDate = Sugar.Date.create('Next ' + show.airsDayOfWeek + ' at ' + show.airsTime);
                 console.log("Aler Date: + alertDate");
                 // console.log("show name : " + show.name);
                 agenda.schedule(alertDate, 'send email alert', show.name).repeatEvery('1 week');
